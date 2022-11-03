@@ -15,14 +15,14 @@ export default function MovieCard({ movie }: MovieCardProps) {
   return (
     <div className="card lg:card-side lg:max-w-xl bg-base-100 shadow-xl">
       <figure>
-        <img src={movie.jsonnob.image} alt={`Thumbnail for ${movie.jsonnob.name}`} />
+        <img src={movie.jsonnob.image} alt={`Thumbnail for ${movie.jsonnob.name}`} className="pointer-events-none" />
       </figure>
       <div className="card-body justify-between gap-3">
         <div className="flex flex-wrap justify-between items-center gap-2">
           <RatingStars movie={movie} />
           <div className="inline-flex">
             {tags.map((tag) => (
-              <div key={`${id}-${tag.type}`} className="badge badge-secondary mx-1">
+              <div key={`${id}-${tag.type}`} className="badge badge-secondary mx-1 select-none">
                 {tag.type.toUpperCase()}
               </div>
             ))}

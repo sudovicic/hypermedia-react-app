@@ -1,4 +1,6 @@
 {
+  "list": "My list",
+  "shelf": "My shelf",
   "generic_error": "Oops, something went wrong!",
   "hero_title": "Welcome to shelvr",
   "hero_text": "Blazingly fast web app! Wow!",
