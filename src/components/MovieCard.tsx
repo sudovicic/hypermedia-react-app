@@ -40,7 +40,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
           </p>
         </div>
         <div className="card-actions justify-between">
-          <span>{new Date(Date.parse(movie['#YEAR'].toString() && movie['#YEAR'].toString())).getFullYear()}</span>
+          {movie['#YEAR'] && <span>{new Date(Date.parse(movie['#YEAR'].toString())).getFullYear()}</span>}
           <div className="badge badge-outline">
             {movie['#RATING'] && movie['#RATING']['#NUMUSERRATINGS']
               ? movie['#RATING']['#NUMUSERRATINGS']

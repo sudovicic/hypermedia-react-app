@@ -7,7 +7,8 @@ export interface Tag {
 
 function daysSincePublished(movie: MutatedMovie): number {
   const oneDay = 24 * 60 * 60 * 1000;
-  const firstDate = Date.parse(movie['#YEAR'].toString());
+  // if no date record then use current date
+  const firstDate = Date.parse(movie['#YEAR'] ? movie['#YEAR'].toString() : Date.now().toString());
   const secondDate = Date.now();
 
   return Math.round(Math.abs((firstDate - secondDate) / oneDay));
