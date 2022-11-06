@@ -1,10 +1,11 @@
-import React, { useCallback, useId } from 'react';
+import React from 'react';
 import classNames from 'classnames';
+import { useCallback, useId } from 'react';
+import type { MutatedMovie } from '../api/api-routes';
 import { useRating } from '../utils/hooks';
-import type { MovieResult } from '../api/api-routes';
 
 export interface RatingStarsProps {
-  movie: MovieResult;
+  movie: MutatedMovie;
 }
 
 // TODO: add toolip to clear rating

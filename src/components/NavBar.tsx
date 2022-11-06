@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { availableLanguages } from '../utils/language';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import SearchBar from './SearchBar';
 
 export default function NavBar() {
   const { t, i18n } = useTranslation();
@@ -40,6 +41,7 @@ export default function NavBar() {
           shelvr
         </Link>
       </div>
+      <SearchBar />
       <div className="flex-none">
         <div className="dropdown dropdown-end dropdown-hover">
           <label tabIndex={1} className="btn btn-ghost rounded-btn">
