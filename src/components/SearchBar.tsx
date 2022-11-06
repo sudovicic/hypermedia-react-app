@@ -1,32 +1,33 @@
 import type { KeyboardEvent } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import type { SWRResponse } from 'swr';
 import useSWR, { useSWRConfig } from 'swr';
-import type { MutatedMovie, MutatedMovieResult } from '../api/api-routes';
-import { fetchedMoviesState } from '../state/FetchedMoviesState';
+import type { Resource, ResourcesResult } from '../api/api-routes';
+import { fetchedResourcesState } from '../state/FetchedResourcesState';
+import { useTranslation } from 'react-i18next';
+import { API_BASE_URL } from '../api/api-routes';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const SearchBar: React.FC = () => {
   const { mutate } = useSWRConfig();
-
-  const baseUrl = 'https://search.imdbot.workers.dev/?q=';
+  const { t } = useTranslation();
+  const setFetchedResources = useSetRecoilState(fetchedResourcesState);
   const [keyboardInput, setKeyboardInput] = useState<string>('');
+  const url = useMemo(() => API_BASE_URL + '?q=' + keyboardInput, [keyboardInput]);
 
-  useSWR(baseUrl + keyboardInput, fetcher, { refreshInterval: 1000 }) as SWRResponse<MutatedMovieResult>;
-
-  const setFetchedMovies = useSetRecoilState(fetchedMoviesState);
-
-  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
     setKeyboardInput(e.currentTarget.value);
   };
 
+  useSWR(url, fetcher, { refreshInterval: 1000 }) as SWRResponse<ResourcesResult>;
+
   useEffect(() => {
-    const fetchApiFromInput = async (): Promise<MutatedMovie[]> => {
+    const fetchApiFromInput = async (): Promise<Resource[]> => {
       try {
         // eslint-disable-next-line
-        const response: MutatedMovieResult = await mutate(baseUrl + keyboardInput);
+        const response: ResourcesResult = await mutate(url);
 
         if (response.ok) {
           return response.description;
@@ -40,23 +41,23 @@ const SearchBar: React.FC = () => {
       }
     };
 
-    if (keyboardInput.length > 0) {
+    if (url !== API_BASE_URL + '?q=') {
       fetchApiFromInput()
-        .then((res: MutatedMovie[]) => {
-          console.log('Movies fetched successfully!');
-          setFetchedMovies(res);
+        .then((res: Resource[]) => {
+          console.log(t('fetch_successful'));
+          setFetchedResources(res);
         })
         .catch((e) => console.error(e));
     }
-  }, [keyboardInput, mutate, setFetchedMovies]);
+  }, [mutate, setFetchedResources, t, url]);
 
   return (
     <div className="searchbar">
       <input
         className="input input-sm w-96 rounded-full bg-slate-800 placeholder-white"
-        onKeyUp={(e) => handleKeyPress(e)}
+        onKeyUp={(e) => handleKeyUp(e)}
         type="text"
-        placeholder="Search for movies, TV shows..."
+        placeholder={t('search_placeholder')}
       />
     </div>
   );

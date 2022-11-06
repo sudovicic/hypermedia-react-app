@@ -1,7 +1,9 @@
-export interface MutatedMovie {
+export const API_BASE_URL = 'https://search.imdbot.workers.dev/';
+
+export interface Resource {
   '#ACTORS': string;
   '#AKA': string;
-  '#GENRE': string;
+  '#GENRE'?: string[];
   '#IMDB_ID': string;
   '#IMDB_IV': string;
   '#IMDB_URL': string;
@@ -23,8 +25,8 @@ export interface MutatedMovie {
   photo_width: number;
 }
 
-export interface MutatedMovieResult {
-  description: MutatedMovie[];
+export interface ResourcesResult {
+  description: Resource[];
   error_code: number;
   ok: boolean;
 }

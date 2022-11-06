@@ -9,8 +9,8 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateColumns: {
-        'movie-cards-vertical': `repeat(auto-fit, minmax(${spacing["48"]}, 1fr))`,
-        'movie-cards-horizontal': `repeat(auto-fit, minmax(${columns.lg}, 1fr))`
+        'resource-cards-vertical': `repeat(auto-fit, minmax(${spacing["48"]}, 1fr))`,
+        'resource-cards-horizontal': `repeat(auto-fit, minmax(${columns.lg}, 1fr))`
       }
     },
   },

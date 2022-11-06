@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { availableLanguages } from '../utils/language';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -7,6 +7,7 @@ import SearchBar from './SearchBar';
 
 export default function NavBar() {
   const { t, i18n } = useTranslation();
+  const location = useLocation();
   const selected = useCallback((l: string) => i18n.resolvedLanguage === l, [i18n]);
 
   return (
@@ -41,7 +42,7 @@ export default function NavBar() {
           shelvr
         </Link>
       </div>
-      <SearchBar />
+      {location.pathname === '/home' && <SearchBar />}
       <div className="flex-none">
         <div className="dropdown dropdown-end dropdown-hover">
           <label tabIndex={1} className="btn btn-ghost rounded-btn">
