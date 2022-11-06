@@ -1,21 +1,21 @@
 import React from 'react';
-import { useLoaderData } from 'react-router-dom';
-import type { MovieResult } from '../api/api-routes';
 import { getMovies } from '../api/api-routes';
 import NavBar from '../components/NavBar';
 import MovieCard from '../components/MovieCard';
-import SearchBar from '../components/SearchBar';
+import { useRecoilValue } from 'recoil';
+import { fetchedMoviesState } from '../state/FetchedMoviesState';
 
 export default function Home() {
-  const movies = useLoaderData() as MovieResult[];
+  const fetchedMoviesFromState = useRecoilValue(fetchedMoviesState);
+
+  console.log(typeof fetchedMoviesFromState, fetchedMoviesFromState);
 
   return (
     <>
-      <SearchBar />
       <NavBar />
       <div className="grid grid-cols-movie-cards-vertical lg:grid-cols-movie-cards-horizontal gap-4">
-        {movies.map((m) => (
-          <MovieCard key={m.jsonnob.name} movie={m} />
+        {fetchedMoviesFromState.map((m) => (
+          <MovieCard key={m['#IMDB_ID']} movie={m} />
         ))}
       </div>
     </>

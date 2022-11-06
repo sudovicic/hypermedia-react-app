@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { availableLanguages } from '../utils/language';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
+import SearchBar from './SearchBar';
 
 export default function NavBar() {
   const { i18n } = useTranslation();
@@ -27,6 +28,7 @@ export default function NavBar() {
           shelvr
         </Link>
       </div>
+      <SearchBar />
       <div className="flex-none">
         <ul className="menu menu-horizontal">
           <li tabIndex={0}>

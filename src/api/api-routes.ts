@@ -1,9 +1,11 @@
+// to be deleted if not needed anymore
 export interface APISearchParams {
   queryString: string;
   startIndex?: number;
   amount?: number;
 }
 
+// to be deleted if not needed anymore
 export interface MovieResult {
   tt_url: string;
   jsonnob: {
@@ -23,37 +25,38 @@ export interface MovieResult {
   };
 }
 
-export interface MutatedMovies {
-  ACTORS: string;
-  AKA: string;
-  GENRE: string;
-  IMDB_ID: string;
-  IMDB_IV: string;
-  IMDB_URL: string;
-  IMDb_SHORT_DESC: string;
-  IMDb_TITLE_TYPE: string;
-  IMG_POSTER: string;
-  KEYWORDS: string;
-  MARINTG: string;
-  RANK: number;
-  RATING: {
-    MAXRATING: number;
-    MINRATING: number;
-    NUMUSERRATINGS: number;
-    ONLYRATING: number;
+export interface MutatedMovie {
+  '#ACTORS': string;
+  '#AKA': string;
+  '#GENRE': string;
+  '#IMDB_ID': string;
+  '#IMDB_IV': string;
+  '#IMDB_URL': string;
+  '#IMDb_SHORT_DESC': string;
+  '#IMDb_TITLE_TYPE': string;
+  '#IMG_POSTER': string;
+  '#KEYWORDS': string;
+  '#MARINTG': string;
+  '#RANK': number;
+  '#RATING': {
+    '#MAXRATING': number;
+    '#MINRATING': number;
+    '#NUMUSERRATINGS': number;
+    '#ONLYRATING': number;
   };
-  TITLE: string;
-  YEAR: number;
+  '#TITLE': string;
+  '#YEAR': number;
   photo_height: number;
   photo_width: number;
 }
 
 export interface MutatedMovieResult {
-  description: Array<MutatedMovies>;
+  description: Array<MutatedMovie>;
   error_code: number;
   ok: boolean;
 }
 
+// to be deleted if not needed anymore
 // TODO: exchange for real API call (this will also get rid of console errors due to duplicate keys)
 export const getMovies = async (): Promise<MovieResult[]> => {
   const dahmer = {
