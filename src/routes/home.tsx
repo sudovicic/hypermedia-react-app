@@ -4,12 +4,14 @@ import type { MovieResult } from '../api/api-routes';
 import { getMovies } from '../api/api-routes';
 import NavBar from '../components/NavBar';
 import MovieCard from '../components/MovieCard';
+import SearchBar from '../components/SearchBar';
 
 export default function Home() {
   const movies = useLoaderData() as MovieResult[];
 
   return (
     <>
+      <SearchBar />
       <NavBar />
       <div className="grid grid-cols-movie-cards-vertical lg:grid-cols-movie-cards-horizontal gap-4">
         {movies.map((m) => (
