@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { useCallback, useId } from 'react';
 import type { MutatedMovie } from '../api/api-routes';
+import type { RatingResult } from '../utils/hooks';
 import { useRating } from '../utils/hooks';
 
 export interface RatingStarsProps {
@@ -10,11 +11,12 @@ export interface RatingStarsProps {
 
 // TODO: add toolip to clear rating
 export default function RatingStars({ movie }: RatingStarsProps) {
-  const { currentRating, updateRating, userRated } = useRating(movie);
+  // eslint-disable-next-line @typescript-eslint/unbound-method
+  const { currentRating, updateRating, userRated }: RatingResult = useRating(movie);
   const halfStarsAmount = 10;
   const isChecked = useCallback(
     (idx: number) => {
-      return idx + 1 === Math.floor(Math.floor(currentRating * 2) / 2.0);
+      return currentRating ? idx + 1 === Math.floor(Math.floor(currentRating * 2) / 2.0) : false;
     },
     [currentRating]
   );

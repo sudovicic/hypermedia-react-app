@@ -1,7 +1,9 @@
-import React, { KeyboardEvent, useEffect, useState } from 'react';
+import type { KeyboardEvent } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import useSWR, { SWRResponse, useSWRConfig } from 'swr';
-import { MovieResult, MutatedMovieResult, MutatedMovie } from '../api/api-routes';
+import type { SWRResponse } from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
+import type { MutatedMovie, MutatedMovieResult } from '../api/api-routes';
 import { fetchedMoviesState } from '../state/FetchedMoviesState';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -12,42 +14,41 @@ const SearchBar: React.FC = () => {
   const baseUrl = 'https://search.imdbot.workers.dev/?q=';
   const [keyboardInput, setKeyboardInput] = useState<string>('');
 
-  useSWR(baseUrl + keyboardInput, fetcher, { refreshInterval: 1000 }) as SWRResponse<MovieResult, any>;
+  useSWR(baseUrl + keyboardInput, fetcher, { refreshInterval: 1000 }) as SWRResponse<MutatedMovieResult>;
 
   const setFetchedMovies = useSetRecoilState(fetchedMoviesState);
-
-  const fetchApiFromInput = async (): Promise<any> => {
-    try {
-      // eslint-disable-next-line
-      const response: MutatedMovieResult = await mutate(baseUrl + keyboardInput);
-
-      if (response && response.ok) {
-        const result: Array<MutatedMovie> = response.description;
-
-        return result;
-      } else {
-        console.log('Error while fetching: ', response);
-        return [];
-      }
-    } catch (error) {
-      console.log(error);
-
-      return Error(' has occurred while fetching from the API.');
-    }
-  };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     setKeyboardInput(e.currentTarget.value);
   };
 
   useEffect(() => {
-    fetchApiFromInput()
-      .then((res: Array<MutatedMovie>) => {
-        console.log('Movies fetched successfully!');
-        setFetchedMovies(res ?? []);
-      })
-      .catch((e) => console.log(e));
-  }, [keyboardInput]);
+    const fetchApiFromInput = async (): Promise<MutatedMovie[]> => {
+      try {
+        // eslint-disable-next-line
+        const response: MutatedMovieResult = await mutate(baseUrl + keyboardInput);
+
+        if (response.ok) {
+          return response.description;
+        } else {
+          console.error('Error while fetching: ', response);
+          return [];
+        }
+      } catch (error) {
+        console.error(error);
+        throw new Error(' has occurred while fetching from the API.');
+      }
+    };
+
+    if (keyboardInput.length > 0) {
+      fetchApiFromInput()
+        .then((res: MutatedMovie[]) => {
+          console.log('Movies fetched successfully!');
+          setFetchedMovies(res);
+        })
+        .catch((e) => console.error(e));
+    }
+  }, [keyboardInput, mutate, setFetchedMovies]);
 
   return (
     <div className="searchbar">

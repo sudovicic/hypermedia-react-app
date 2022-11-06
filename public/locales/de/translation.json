@@ -4,5 +4,9 @@
   "generic_error": "Oops, da ist etwas schiefgegangen!",
   "hero_title": "Willkommen zu shelvr",
   "hero_text": "Blitzschnelle Webanwendung! Juhu!",
-  "hero_cta": "Loslegen"
+  "hero_cta": "Loslegen",
+  "no_description": "Keine Beschreibung vorhanden.",
+  "no_preview_image": "Kein Vorschaubild vorhanden.",
+  "no_ratings": "Keine Bewertungen vorhanden.",
+  "alt_thumbnail": "Vorschaubild für {{ resource }}"
 }

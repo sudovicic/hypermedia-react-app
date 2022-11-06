@@ -16,7 +16,7 @@ function daysSincePublished(movie: MutatedMovie): number {
 
 const NEW_THRESHOLD = 180; // max days since published for 'new' tag
 const TRENDING_RATING_VALUE_THRESHOLD = 7.5; // min avg rating for 'trending' tag
-const TRENDING_RATING_COUNT_THRESHOLD = 1000; // min number of ratings for 'trending tag'
+const TRENDING_RATING_COUNT_THRESHOLD = 1000; // min number of ratings for 'trending' tag
 
 export function useTags(movie: MutatedMovie): Tag[] {
   const tags: Tag[] = [];
@@ -25,8 +25,7 @@ export function useTags(movie: MutatedMovie): Tag[] {
     tags.push({ type: 'new' });
 
     if (
-      movie['#RATING'] &&
-      movie['#RATING']['#NUMUSERRATINGS'] &&
+      movie['#RATING']?.['#NUMUSERRATINGS'] &&
       movie['#RATING']['#NUMUSERRATINGS'] >= TRENDING_RATING_VALUE_THRESHOLD &&
       movie['#RATING']['#NUMUSERRATINGS'] >= TRENDING_RATING_COUNT_THRESHOLD
     ) {
@@ -37,11 +36,18 @@ export function useTags(movie: MutatedMovie): Tag[] {
   return tags;
 }
 
-export function useRating(movie: MutatedMovie) {
+export interface RatingResult {
+  currentRating?: number;
+  // eslint-disable-next-line no-unused-vars
+  updateRating(rating: number): void;
+  userRated: boolean;
+}
+
+export function useRating(movie: MutatedMovie): RatingResult {
   const [userRated, setUserRated] = useState(false);
 
   return {
-    currentRating: movie['#RATING'] && movie['#RATING']['#ONLYRATING'] && movie['#RATING']['#ONLYRATING'],
+    currentRating: movie['#RATING']?.['#ONLYRATING'],
     updateRating: (rating: number) => {
       setUserRated((prevUserRated) => !prevUserRated);
       alert(`Setting rating of ${rating} for ${movie['#TITLE']} not implemented yet.`);

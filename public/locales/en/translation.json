@@ -4,5 +4,9 @@
   "generic_error": "Oops, something went wrong!",
   "hero_title": "Welcome to shelvr",
   "hero_text": "Blazingly fast web app! Wow!",
-  "hero_cta": "Get Started"
+  "hero_cta": "Get Started",
+  "no_description": "No description available.",
+  "no_preview_image": "No preview image available.",
+  "no_ratings": "No ratings available.",
+  "alt_thumbnail": "Thumbnail for {{ resource }}"
 }
