@@ -4,6 +4,7 @@ import type { Resource } from '../api/api-routes';
 import { useActors, useComments, useGenres, useTags, useWatchList } from '../utils/hooks';
 import RatingStars from './RatingStars';
 import { useTranslation } from 'react-i18next';
+import UsersRatingStars from './UsersRatingStars';
 
 interface ResourceDetailsCardProps {
   resource: Resource;
@@ -44,6 +45,7 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
           )}
           {/* TODO: improve */}
           <RatingStars resource={resource} orientation="vertical" />
+          <UsersRatingStars resource={resource} />
         </div>
         {tags.length > 0 && (
           <div className="inline-flex mb-4">
