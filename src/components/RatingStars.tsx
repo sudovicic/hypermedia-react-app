@@ -13,13 +13,11 @@ export interface RatingStarsProps {
 // TODO: add toolip to clear rating
 export default function RatingStars({ resource, orientation }: RatingStarsProps) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { currentRating, updateRating, userRated }: RatingResult = useRating(resource);
+  const { currentRating }: RatingResult = useRating(resource);
   const halfStarsAmount = 10;
   const isChecked = useCallback(
     (idx: number) => {
-      return currentRating.ratingValue
-        ? idx + 1 === Math.floor(Math.floor(currentRating.ratingValue * 2) / 2.0)
-        : false;
+      return currentRating.ratingValue ? idx <= currentRating.ratingValue : false;
     },
     [currentRating]
   );
@@ -40,13 +38,12 @@ export default function RatingStars({ resource, orientation }: RatingStarsProps)
             id={`radio-${id}-${idx}`}
             type="radio"
             name={`rating-${id}`}
-            className={classNames('mask mask-star-2', {
+            className={classNames('pointer-events-none mask mask-star-2', {
               'mask-half-1': idx % 2 === 0,
               'mask-half-2': idx % 2 !== 0,
-              'bg-accent': userRated,
             })}
+            disabled
             checked={isChecked(idx)}
-            onChange={() => updateRating((idx + 1) / 2)}
           />
         ))}
       </div>
