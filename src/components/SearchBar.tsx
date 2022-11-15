@@ -1,14 +1,11 @@
 import type { KeyboardEvent } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
-import type { SWRResponse } from 'swr';
 import useSWR, { useSWRConfig } from 'swr';
-import type { Resource, ResourcesResult } from '../api/api-routes';
+import type { Resource, ResourcesResult } from '../utils/api';
 import { fetchedResourcesState } from '../state/FetchedResourcesState';
 import { useTranslation } from 'react-i18next';
-import { API_BASE_URL } from '../api/api-routes';
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { API_BASE_URL, fetcher } from '../utils/api';
 
 const SearchBar: React.FC = () => {
   const { mutate } = useSWRConfig();
@@ -21,7 +18,7 @@ const SearchBar: React.FC = () => {
     setKeyboardInput(e.currentTarget.value);
   };
 
-  useSWR(url, fetcher, { refreshInterval: 1000 }) as SWRResponse<ResourcesResult>;
+  useSWR(url, fetcher, { refreshInterval: 1000 });
 
   useEffect(() => {
     const fetchApiFromInput = async (): Promise<Resource[]> => {

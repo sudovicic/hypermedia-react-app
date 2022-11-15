@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Resource } from '../api/api-routes';
+import type { Resource } from '../utils/api';
 import RatingStars from './RatingStars';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useId, useState } from 'react';
 import { LocalStorageService, Services } from '../services/LocalStorageService';
-import type { Resource } from '../api/api-routes';
+import type { Resource } from '../utils/api';
 
 export interface UsersRatingStarsProps {
   resource: Resource;

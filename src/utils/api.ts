@@ -30,3 +30,5 @@ export interface ResourcesResult {
   error_code: number;
   ok: boolean;
 }
+
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());

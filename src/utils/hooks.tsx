@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Resource } from '../api/api-routes';
+import type { Resource } from './api';
 import { useRecoilState } from 'recoil';
 import { appThemeMode } from '../state/ThemeState';
 

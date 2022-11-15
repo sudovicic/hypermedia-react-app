@@ -1,6 +1,6 @@
 import React from 'react';
 import { useId } from 'react';
-import type { Resource } from '../api/api-routes';
+import type { Resource } from '../utils/api';
 import { useActors, useComments, useGenres, useTags, useWatchList } from '../utils/hooks';
 import RatingStars from './RatingStars';
 import { useTranslation } from 'react-i18next';

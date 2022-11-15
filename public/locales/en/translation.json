@@ -17,5 +17,11 @@
   "recommendations": "Other Movies & Shows",
   "add_to_list_cta": "Add to watch list",
   "added_to_list": "Already on watch list",
-  "show_comments": "Show comments"
+  "show_comments": "Show comments",
+  "tab_watched": "Watched",
+  "tab_rated": "Rated",
+  "tab_commented": "Commented",
+  "no_watched": "Looks like you haven't yet marked any movies or shows as watched.",
+  "no_rated": "Looks like you haven't yet rated any movies or shows.",
+  "no_commented": "Looks like you haven't yet posted comments to any movies or shows."
 }

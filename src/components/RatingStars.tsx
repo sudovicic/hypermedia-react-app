@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { useCallback, useId } from 'react';
-import type { Resource } from '../api/api-routes';
+import type { Resource } from '../utils/api';
 import type { RatingResult } from '../utils/hooks';
 import { useRating } from '../utils/hooks';
 
