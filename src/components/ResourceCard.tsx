@@ -11,7 +11,7 @@ interface ResourceCardProps {
 export default function ResourceCard({ resource }: ResourceCardProps) {
   const { t } = useTranslation();
 
-  const parse = (text: string) => {
+  const parse = (text: string): string | null => {
     const doc = new DOMParser().parseFromString(text, 'text/html');
     return doc.documentElement.textContent;
   };

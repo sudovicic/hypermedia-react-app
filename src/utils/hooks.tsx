@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import type { Resource } from '../api/api-routes';
+import { useRecoilState } from 'recoil';
+import { appThemeMode } from '../state/ThemeState';
 
 export interface Tag {
   type: 'new' | 'trending' | 'upcoming';
@@ -98,5 +100,14 @@ export function useWatchList(resource: Resource): WatchList {
   return {
     isSaved: Math.random() > 0.5,
     save: (resourceId) => alert(`Saving of resource with id ${resourceId} is not implemented yet.`),
+  };
+}
+
+export function useTheme() {
+  const [themeMode, setThemeMode] = useRecoilState(appThemeMode);
+
+  return {
+    currentTheme: themeMode,
+    toggleTheme: () => setThemeMode(themeMode === 'dark' ? 'light' : 'dark'),
   };
 }

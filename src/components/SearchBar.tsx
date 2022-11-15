@@ -54,7 +54,7 @@ const SearchBar: React.FC = () => {
   return (
     <div className="searchbar">
       <input
-        className="input input-sm w-96 rounded-full bg-slate-800 placeholder-white"
+        className="input input-sm w-96 rounded-full bg-transparent/10 placeholder-accent-content"
         onKeyUp={(e) => handleKeyUp(e)}
         type="text"
         placeholder={t('search_placeholder')}

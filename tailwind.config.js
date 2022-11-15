@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-const { columns, spacing }= require('tailwindcss/defaultTheme');
+const { columns, spacing } = require('tailwindcss/defaultTheme');
 
 module.exports = {
   content: [
@@ -19,6 +19,6 @@ module.exports = {
     require('@tailwindcss/line-clamp')
   ],
   daisyui: {
-    themes: ["synthwave"],
+    themes: ["light", "dark"],
   },
 }

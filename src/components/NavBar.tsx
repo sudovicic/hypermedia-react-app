@@ -4,6 +4,7 @@ import { availableLanguages } from '../utils/language';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import SearchBar from './SearchBar';
+import ThemeToggle from '../components/ThemeToggle';
 
 export default function NavBar() {
   const { t, i18n } = useTranslation();
@@ -43,10 +44,11 @@ export default function NavBar() {
         </Link>
       </div>
       {location.pathname === '/home' && <SearchBar />}
+      <ThemeToggle />
       <div className="flex-none">
         <div className="dropdown dropdown-end dropdown-hover">
           <label tabIndex={1} className="btn btn-ghost rounded-btn">
-            <span className="flex pr-2">{i18n.resolvedLanguage.toUpperCase()}</span>
+            <span className="flex pr-2 min-w-[2rem] justify-center">{i18n.resolvedLanguage.toUpperCase()}</span>
             <svg className="fill-current" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
               <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
             </svg>

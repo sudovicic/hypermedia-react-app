@@ -1,4 +1,4 @@
 export interface UserRating {
-    movieId: string,
-    rating: number
+  movieId: string;
+  rating: number;
 }
