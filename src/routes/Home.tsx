@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { fetchedResourcesState } from '../state/FetchedResourcesState';
-import type { Resource } from '../utils/api';
+import type { Resource } from '../api/api-routes';
 import ResourceGrid from '../components/ResourceGrid';
 
 export default function Home() {

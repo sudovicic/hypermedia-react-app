@@ -2,16 +2,16 @@ import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useId, useState } from 'react';
 import { LocalStorageService, Services } from '../services/LocalStorageService';
-import type { Resource } from '../utils/api';
+import type { Resource } from '../api/api-routes';
+import { UserRatingDAO } from '../dao/UserRatingDAO';
 
 export interface UsersRatingStarsProps {
   resource: Resource;
 }
-
-const DAO = LocalStorageService.getDAO(Services.userRating);
-
 // TODO: add toolip to clear rating
 export default function UsersRatingStars({ resource }: UsersRatingStarsProps) {
+  const DAO = LocalStorageService.getDAO(Services.userRating) as UserRatingDAO;
+
   const starsAmount = 5;
   const id = useId();
 
@@ -46,7 +46,7 @@ export default function UsersRatingStars({ resource }: UsersRatingStarsProps) {
      * else add a new entry
      */
     const addRating = (): void => {
-      if (DAO?.getEntryById(resourceID) === null) {
+      if (DAO?.getEntryById(resourceID) === null && userRating !== -1) {
         DAO.addEntry({ movieId: resourceID, rating: userRating });
       } else {
         DAO?.updateEntryById({ movieId: resourceID, rating: userRating });

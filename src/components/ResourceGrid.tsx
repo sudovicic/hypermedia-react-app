@@ -1,6 +1,6 @@
 import React from 'react';
 import ResourceCard from './ResourceCard';
-import type { Resource } from '../utils/api';
+import type { Resource } from '../api/api-routes';
 
 export interface ResourceGridProps {
   resources: Resource[];

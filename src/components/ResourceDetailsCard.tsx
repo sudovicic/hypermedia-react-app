@@ -1,29 +1,58 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useId } from 'react';
-import type { Resource } from '../utils/api';
-import { useActors, useComments, useGenres, useTags, useWatchList } from '../utils/hooks';
+import type { Resource } from '../api/api-routes';
+import { useActors, useComments, useGenres, useTags } from '../utils/hooks';
 import RatingStars from './RatingStars';
 import { useTranslation } from 'react-i18next';
 import UsersRatingStars from './UsersRatingStars';
+import { LocalStorageService, Services } from '../services/LocalStorageService';
+import { Movie } from '../dao/interfaces/Movie';
+import { MovieListDAO } from '../dao/MovieListDAO';
 
 interface ResourceDetailsCardProps {
   resource: Resource;
 }
 
 export default function ResourceDetailsCard({ resource }: ResourceDetailsCardProps) {
+  const DAO = LocalStorageService.getDAO(Services.movieList) as MovieListDAO;
+
   const tags = useTags(resource);
   const genres = useGenres(resource);
   const actors = useActors(resource);
   const comments = useComments(resource);
-  const { isSaved } = useWatchList(resource);
   const id = useId();
   const { t } = useTranslation();
+
+  const [isSaved, setIsSaved] = useState<boolean>(false);
 
   const parse = (text: string) => {
     const doc = new DOMParser().parseFromString(text, 'text/html');
     return doc.documentElement.textContent;
   };
   const desc = resource['#IMDb_SHORT_DESC'] && parse(resource['#IMDb_SHORT_DESC']);
+
+  /**
+   * Add a movie to watch list if movie is not added yet
+   * Else remove it from the list
+   * @param movie The movie itself
+   */
+  const toggleMovieToWatchList = (movie: Movie): void => {
+    if (DAO.getEntryById(movie['#IMDB_ID']) === null) {
+      DAO.addEntry(movie);
+      setIsSaved(true);
+    } else {
+      DAO.deleteEntry(movie);
+      setIsSaved(false);
+    }
+  };
+
+  useEffect(() => {
+    if (DAO.getEntryById(resource['#IMDB_ID'])) {
+      setIsSaved(true);
+    } else {
+      setIsSaved(false);
+    }
+  }, [resource['#IMDB_ID']]);
 
   return (
     <div className="card lg:card-side bg-base-100 shadow-xl">
@@ -70,10 +99,7 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
           {resource['#MARINTG'] && <div className="badge badge-outline mt-4">{resource['#MARINTG']}</div>}
         </div>
         <div className="card-actions">
-          <button
-            className="btn btn-wide mr-4"
-            onClick={() => alert('save to/remove from watchlist is not yet implemented.')}
-          >
+          <button className="btn btn-wide mr-4" onClick={() => toggleMovieToWatchList(resource)}>
             <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24">
               {isSaved ? (
                 <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
