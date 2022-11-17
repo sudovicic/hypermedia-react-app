@@ -1,3 +1,4 @@
+import type { PropsWithChildren } from 'react';
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import { useId, useState } from 'react';
@@ -11,7 +12,7 @@ export interface UsersRatingStarsProps {
 const DAO = LocalStorageService.getDAO(Services.userRating);
 
 // TODO: add toolip to clear rating
-export default function UsersRatingStars({ resource }: UsersRatingStarsProps) {
+export default function UsersRatingStars({ resource, children }: PropsWithChildren<UsersRatingStarsProps>) {
   const starsAmount = 5;
   const id = useId();
 
@@ -74,7 +75,7 @@ export default function UsersRatingStars({ resource }: UsersRatingStarsProps) {
           />
         ))}
       </div>
-      <p className="text-lg">My rating</p>
+      {children}
     </div>
   );
 }

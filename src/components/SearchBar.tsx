@@ -1,5 +1,5 @@
 import type { KeyboardEvent } from 'react';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useSetRecoilState } from 'recoil';
 import useSWR, { useSWRConfig } from 'swr';
 import type { Resource, ResourcesResult } from '../utils/api';
@@ -13,12 +13,17 @@ const SearchBar: React.FC = () => {
   const setFetchedResources = useSetRecoilState(fetchedResourcesState);
   const [keyboardInput, setKeyboardInput] = useState<string>('');
   const url = useMemo(() => API_BASE_URL + '?q=' + keyboardInput, [keyboardInput]);
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
     setKeyboardInput(e.currentTarget.value);
   };
 
   useSWR(url, fetcher, { refreshInterval: 1000 });
+
+  useEffect(() => {
+    ref.current?.focus();
+  }, []);
 
   useEffect(() => {
     const fetchApiFromInput = async (): Promise<Resource[]> => {
@@ -55,6 +60,7 @@ const SearchBar: React.FC = () => {
         onKeyUp={(e) => handleKeyUp(e)}
         type="text"
         placeholder={t('search_placeholder')}
+        ref={ref}
       />
     </div>
   );

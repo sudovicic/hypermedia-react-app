@@ -1,5 +1,10 @@
 export const API_BASE_URL = 'https://search.imdbot.workers.dev/';
 
+export interface Comment {
+  createdAt: Date;
+  content: string;
+}
+
 export interface Resource {
   '#ACTORS': string;
   '#AKA': string;
@@ -23,6 +28,12 @@ export interface Resource {
   '#YEAR'?: number;
   photo_height: number;
   photo_width: number;
+
+  // additional data
+  comments?: Comment[];
+  saved?: boolean;
+  watched?: boolean;
+  userRating?: 1 | 2 | 3 | 4 | 5;
 }
 
 export interface ResourcesResult {

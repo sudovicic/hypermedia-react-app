@@ -21,7 +21,13 @@
   "tab_watched": "Watched",
   "tab_rated": "Rated",
   "tab_commented": "Commented",
+  "no_saved": "Looks like you haven't yet saved any movies or shows to your watch list.",
   "no_watched": "Looks like you haven't yet marked any movies or shows as watched.",
   "no_rated": "Looks like you haven't yet rated any movies or shows.",
-  "no_commented": "Looks like you haven't yet posted comments to any movies or shows."
+  "no_commented": "Looks like you haven't yet posted comments to any movies or shows.",
+  "resource_name": "Name",
+  "resource_cast": "Cast",
+  "resource_rating": "My Rating",
+  "resource_comments": "My Comments",
+  "details": "Details"
 }

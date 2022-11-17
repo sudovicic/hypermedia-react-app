@@ -1,7 +1,7 @@
 import React from 'react';
 import { useId } from 'react';
 import type { Resource } from '../utils/api';
-import { useActors, useComments, useGenres, useTags, useWatchList } from '../utils/hooks';
+import { useCast, useComments, useGenres, useTags, useWatchList } from '../utils/hooks';
 import RatingStars from './RatingStars';
 import { useTranslation } from 'react-i18next';
 import UsersRatingStars from './UsersRatingStars';
@@ -13,9 +13,9 @@ interface ResourceDetailsCardProps {
 export default function ResourceDetailsCard({ resource }: ResourceDetailsCardProps) {
   const tags = useTags(resource);
   const genres = useGenres(resource);
-  const actors = useActors(resource);
+  const actors = useCast(resource, 2);
   const comments = useComments(resource);
-  const { isSaved } = useWatchList(resource);
+  const { isSaved, toggleSaved } = useWatchList(resource);
   const id = useId();
   const { t } = useTranslation();
 
@@ -36,16 +36,17 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
         <div className="mb-4 flex justify-between">
           {actors && (
             <div>
-              {actors.slice(0, 3).map((actor) => (
+              {actors.map((actor) => (
                 <p key={actor} className="uppercase mb-1">
                   {actor}
                 </p>
               ))}
             </div>
           )}
-          {/* TODO: improve */}
           <RatingStars resource={resource} orientation="vertical" />
-          <UsersRatingStars resource={resource} />
+          <UsersRatingStars resource={resource}>
+            <p className="text-lg">{t('resource_rating')}</p>
+          </UsersRatingStars>
         </div>
         {tags.length > 0 && (
           <div className="inline-flex mb-4">
@@ -70,10 +71,7 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
           {resource['#MARINTG'] && <div className="badge badge-outline mt-4">{resource['#MARINTG']}</div>}
         </div>
         <div className="card-actions">
-          <button
-            className="btn btn-wide mr-4"
-            onClick={() => alert('save to/remove from watchlist is not yet implemented.')}
-          >
+          <button className="btn btn-wide mr-4" onClick={() => toggleSaved(resource['#IMDB_ID'])}>
             <svg className="w-6 h-6 mr-2" viewBox="0 0 24 24">
               {isSaved ? (
                 <path fill="currentColor" d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />

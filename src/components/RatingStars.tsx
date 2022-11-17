@@ -13,13 +13,13 @@ export interface RatingStarsProps {
 // TODO: add toolip to clear rating
 export default function RatingStars({ resource, orientation }: RatingStarsProps) {
   // eslint-disable-next-line @typescript-eslint/unbound-method
-  const { currentRating }: RatingResult = useRating(resource);
+  const { overallRating }: RatingResult = useRating(resource);
   const halfStarsAmount = 10;
   const isChecked = useCallback(
     (idx: number) => {
-      return currentRating.ratingValue ? idx <= currentRating.ratingValue : false;
+      return overallRating.ratingValue ? idx <= overallRating.ratingValue : false;
     },
-    [currentRating]
+    [overallRating]
   );
   const id = useId();
 
@@ -47,10 +47,10 @@ export default function RatingStars({ resource, orientation }: RatingStarsProps)
           />
         ))}
       </div>
-      {currentRating.ratingValue && currentRating.ratingCount && (
+      {overallRating.ratingValue && overallRating.ratingCount && (
         <p className="text-lg">
-          <span className="font-bold">{currentRating.ratingValue / 2}</span>&nbsp;
-          <small>({currentRating.ratingCount})</small>
+          <span className="font-bold">{overallRating.ratingValue / 2}</span>&nbsp;
+          <small>({overallRating.ratingCount})</small>
         </p>
       )}
     </div>
