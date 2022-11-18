@@ -33,8 +33,10 @@ export interface Resource {
   comments?: Comment[];
   saved?: boolean;
   watched?: boolean;
-  userRating?: 1 | 2 | 3 | 4 | 5;
+  userRating?: UserRating;
 }
+
+export type UserRating = 1 | 2 | 3 | 4 | 5;
 
 export interface ResourcesResult {
   description: Resource[];

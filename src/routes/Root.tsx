@@ -7,7 +7,7 @@ export default function Root() {
   const { t } = useTranslation();
 
   return (
-    <div className="hero min-h-screen bg-base-200">
+    <div className="hero flex flex-col flex-1 justify-center">
       <div className="hero-content text-center">
         <div className="max-w-md">
           <h1 className="text-5xl font-bold">{t('hero_title')}</h1>

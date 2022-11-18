@@ -1,19 +1,24 @@
 import React from 'react';
 import { useRecoilValue } from 'recoil';
-import { fetchedResourcesState } from '../state/FetchedResourcesState';
-import type { Resource } from '../api/api-routes';
-import ResourceGrid from '../components/ResourceGrid';
+import ResourceGrid from '../components/ui/ResourceGrid';
+import type { Resource } from '../utils/api';
+import { fetchedResourcesState } from '../state/ResourcesState';
+import NoResults from '../components/NoResults';
 
 export default function Home() {
-  const fetchedResourcesFromState = useRecoilValue<Resource[] | null>(fetchedResourcesState);
+  const fetchedResources = useRecoilValue<Resource[] | null>(fetchedResourcesState);
 
-  return fetchedResourcesFromState ? (
+  return (
     <div className="flex justify-center">
       <div className="w-11/12">
-        <ResourceGrid resources={fetchedResourcesFromState} />
+        {fetchedResources ? (
+          <ResourceGrid resources={fetchedResources} />
+        ) : (
+          <div className="h-full mt-28">
+            <NoResults />
+          </div>
+        )}
       </div>
     </div>
-  ) : (
-    <div>no content</div>
   );
 }

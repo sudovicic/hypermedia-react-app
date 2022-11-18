@@ -1,51 +1,60 @@
 import React, { useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useRecoilValue } from 'recoil';
-import { fetchedResourcesState } from '../state/FetchedResourcesState';
-import ResourceDetailsCard from '../components/ResourceDetailsCard';
-import ResourceGrid from '../components/ResourceGrid';
-import GenericError from '../components/GenericError';
-import BackButton from '../components/BackButton';
+import ResourceDetailsCard from '../components/ui/ResourceDetailsCard';
+import ResourceGrid from '../components/ui/ResourceGrid';
+import { fetchedResourcesState, resourcesState } from '../state/ResourcesState';
+import Layout from '../components/layout/Layout';
 
 export default function Details() {
   const { resourceId } = useParams();
   const { t } = useTranslation();
-  const resources = useRecoilValue(fetchedResourcesState);
+  const resources = useRecoilValue(resourcesState);
+  const fetchedResources = useRecoilValue(fetchedResourcesState);
 
+  // TODO: simplify
   const { selectedResource, otherResources } = useMemo(() => {
-    const selectedIdx = resources.findIndex((r) => r['#IMDB_ID'] === resourceId);
-    return {
-      selectedResource: selectedIdx !== -1 ? resources[selectedIdx] : undefined,
-      otherResources: selectedIdx !== -1 ? resources.filter((val, idx) => idx !== selectedIdx) : undefined,
-    };
-  }, [resourceId, resources]);
+    if (!resources && !fetchedResources) {
+      return { selectedResource: null, otherResources: null };
+    }
+    const resourceIdx = resources?.findIndex((r) => r['#IMDB_ID'] === resourceId) ?? -1;
+    if (resourceIdx >= 0) {
+      return {
+        selectedResource: resourceIdx >= 0 ? resources?.[resourceIdx] : null,
+        otherResources: resourceIdx >= 0 ? fetchedResources?.filter((val, idx) => idx !== resourceIdx) : null,
+      };
+    } else {
+      const fetchedResourceIdx = fetchedResources?.findIndex((r) => r['#IMDB_ID'] === resourceId) ?? -1;
+      if (fetchedResourceIdx >= 0) {
+        return {
+          selectedResource: fetchedResourceIdx >= 0 ? fetchedResources?.[fetchedResourceIdx] : null,
+          otherResources:
+            fetchedResourceIdx >= 0 ? fetchedResources?.filter((val, idx) => idx !== fetchedResourceIdx) : null,
+        };
+      }
+    }
+    return { selectedResource: null, otherResources: null };
+  }, [resourceId, resources, fetchedResources]);
 
-  // scroll to top when other resource's details are rendered
+  // scroll to top when another resource's details are rendered
   useEffect(() => {
-    window.scrollTo(0, 0);
+    document.querySelector('main')?.scrollTo(0, 0);
   }, [resourceId]);
 
-  return selectedResource || otherResources ? (
-    <div className="flex justify-center">
-      <div className="w-10/12">
-        <div className="mb-2">
-          <BackButton />
-        </div>
-        {selectedResource && (
-          <div className="mb-16">
-            <ResourceDetailsCard resource={selectedResource} />
-          </div>
-        )}
-        {otherResources && (
-          <>
-            <p className="text-lg font-bold mb-8">{t('recommendations')}</p>
-            <ResourceGrid resources={otherResources} />
-          </>
-        )}
+  return selectedResource ? (
+    <Layout titleKey="details">
+      <div className="mb-16">
+        <ResourceDetailsCard resource={selectedResource} />
       </div>
-    </div>
+      {otherResources && (
+        <>
+          <p className="text-lg font-bold mb-8">{t('recommendations')}</p>
+          <ResourceGrid resources={otherResources} />
+        </>
+      )}
+    </Layout>
   ) : (
-    <GenericError />
+    <Navigate replace to="/home" />
   );
 }

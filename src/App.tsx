@@ -1,10 +1,10 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from './routes/Home';
-import GenericError from './components/GenericError';
+import GenericError from './components/ui/GenericError';
 import { RecoilRoot } from 'recoil';
-import Layout from './routes/Layout';
-import List from './routes/List';
+import Scaffold from './routes/Scaffold';
+import Watchlist from './routes/Watchlist';
 import Details from './routes/Details';
 import Root from './routes/Root';
 import Shelf from './routes/Shelf';
@@ -12,7 +12,7 @@ import Shelf from './routes/Shelf';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Layout />,
+    element: <Scaffold />,
     children: [
       {
         path: '/',
@@ -26,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'list',
-        element: <List />,
+        element: <Watchlist />,
         errorElement: <GenericError />,
       },
       {
@@ -39,6 +39,7 @@ const router = createBrowserRouter([
         element: <Details />,
       },
     ],
+    errorElement: <GenericError />,
   },
 ]);
 

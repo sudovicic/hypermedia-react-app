@@ -8,6 +8,11 @@ export const LS_KEY_RESOURCES = 'resources';
 // eslint-disable-next-line
 const validateResources = (item: Resource[] | null) => true;
 
+export const fetchedResourcesState = atom<Resource[] | null>({
+  key: 'fetchedResources',
+  default: null,
+});
+
 export const resourcesState = atom<Resource[] | null>({
   key: 'resources',
   default: null,
@@ -51,6 +56,6 @@ export const savedResourcesState = selector({
   get: ({ get }) => {
     const resources = get(resourcesState);
 
-    return filterFn(resources, (r) => r.saved != null);
+    return filterFn(resources, (r) => !!r.saved);
   },
 });

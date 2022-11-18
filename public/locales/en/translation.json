@@ -26,9 +26,13 @@
   "no_watched": "Looks like you haven't yet marked any movies or shows as watched.",
   "no_rated": "Looks like you haven't yet rated any movies or shows.",
   "no_commented": "Looks like you haven't yet posted comments to any movies or shows.",
+  "no_results": "There are no results matching your search.",
   "resource_name": "Name",
   "resource_cast": "Cast",
   "resource_rating": "My Rating",
   "resource_comments": "My Comments",
-  "details": "Details"
+  "details": "Details",
+  "remove_from_list_cta": "Remove",
+  "mark_as_watched_cta": "Watched",
+  "actions": "Actions"
 }
