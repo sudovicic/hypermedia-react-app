@@ -34,5 +34,9 @@
   "details": "Details",
   "remove_from_list_cta": "Remove",
   "mark_as_watched_cta": "Watched",
-  "actions": "Actions"
+  "actions": "Actions",
+  "action_confirm": "Confirm",
+  "action_deny": "Cancel",
+  "modal_title_confirm_remove_from_list": "Remove from My List",
+  "modal_content_confirm_remove_from_list": "Are you sure you want to remove {{title}} from My List?"
 }
