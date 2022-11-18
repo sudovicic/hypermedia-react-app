@@ -4,9 +4,9 @@ import { resourcesState } from '../../../state/ResourcesState';
 
 export interface WatchList {
   isSaved: boolean;
-  toggleSaved: (resourceId: string) => void;
+  toggleSaved: () => void;
   isMarkedAsWatched: boolean;
-  toggleWatched: (resourceId: string) => void;
+  toggleWatched: () => void;
 }
 
 // eslint-disable-next-line
@@ -33,6 +33,11 @@ export default function useWatchlist(resource: Resource): WatchList {
 
   const isMarkedAsWatched = resources?.some((r) => r['#IMDB_ID'] === resource['#IMDB_ID'] && r.watched) ?? false;
 
+  /**
+   * Toggles the `watched` flag of a resource.
+   * Additionally, sets the `saved` flag to `false` if `watched` is `true`,
+   * thereby removing the watched resource from the watchlist.
+   */
   const toggleWatched = () => {
     const clonedResource = JSON.parse(JSON.stringify(resource)) as Resource;
     if (!resources) {
@@ -44,6 +49,9 @@ export default function useWatchlist(resource: Resource): WatchList {
       } else {
         const clonedResources = JSON.parse(JSON.stringify(resources)) as Resource[];
         clonedResources[idx].watched = !resource.watched;
+        if (resource.saved) {
+          clonedResources[idx].saved = false;
+        }
         setResources(clonedResources);
       }
     }

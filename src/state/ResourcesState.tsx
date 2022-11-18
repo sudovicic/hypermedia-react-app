@@ -44,7 +44,7 @@ export const filteredResourcesState = selector({
       case 'rated':
         return filterFn(resources, (r) => r.userRating != null);
       case 'watched':
-        return filterFn(resources, (r) => r.watched != null);
+        return filterFn(resources, (r) => r.watched != null && r.watched);
       default:
         return null;
     }

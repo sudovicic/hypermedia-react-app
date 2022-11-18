@@ -81,7 +81,7 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
           {resource['#MARINTG'] && <div className="badge badge-outline mt-4">{resource['#MARINTG']}</div>}
         </div>
         <div className="card-actions">
-          <button className="btn btn-wide mr-4" onClick={() => toggleSaved(resource['#IMDB_ID'])}>
+          <button className="btn btn-wide mr-4" onClick={toggleSaved}>
             {isSaved ? <Check className={iconClasses} /> : <Plus className={iconClasses} />}
             {t(isSaved ? 'added_to_list' : 'add_to_list_cta')}
           </button>

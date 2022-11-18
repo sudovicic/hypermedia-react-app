@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
 import useModal from '../../../../hooks/useModal';
+import useWatchlist from '../../../../hooks/resources/useWatchlist/useWatchlist';
 
 export interface WatchlistResourceListActionProps {
   resource: Resource;
@@ -13,13 +14,8 @@ export interface WatchlistResourceListActionProps {
 export default function WatchlistResourceListActions({ resource: r }: WatchlistResourceListActionProps) {
   const { t } = useTranslation();
   const { openModal, closeModal } = useModal();
+  const { toggleSaved, toggleWatched } = useWatchlist(r);
   const buttonClasses = 'btn btn-xs';
-
-  const remove = () => alert('remove');
-
-  const markAsWatched = () => {
-    // TODO implement mark as watched
-  };
 
   const openConfirmationModal = () => {
     return openModal({
@@ -32,7 +28,11 @@ export default function WatchlistResourceListActions({ resource: r }: WatchlistR
             title: {
               key: 'action_confirm',
             },
-            onClick: remove,
+            // TODO: close modal automatically after given callback was called
+            onClick: () => {
+              toggleSaved();
+              closeModal();
+            },
           },
           {
             type: 'deny',
@@ -48,7 +48,7 @@ export default function WatchlistResourceListActions({ resource: r }: WatchlistR
 
   return (
     <div className="btn-group">
-      <button onClick={markAsWatched} className={classNames(buttonClasses, 'btn-success hover:bg-success/80')}>
+      <button onClick={toggleWatched} className={classNames(buttonClasses, 'btn-success hover:bg-success/80')}>
         {t('mark_as_watched_cta')}
       </button>
       <button onClick={openConfirmationModal} className={classNames(buttonClasses, 'btn-error hover:bg-error/80')}>
