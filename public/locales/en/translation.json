@@ -38,5 +38,6 @@
   "action_confirm": "Confirm",
   "action_deny": "Cancel",
   "modal_title_confirm_remove_from_list": "Remove from My List",
-  "modal_content_confirm_remove_from_list": "Are you sure you want to remove {{title}} from My List?"
+  "modal_content_confirm_remove_from_list": "Are you sure you want to remove {{title}} from My List?",
+  "clear_rating": "Clear rating"
 }

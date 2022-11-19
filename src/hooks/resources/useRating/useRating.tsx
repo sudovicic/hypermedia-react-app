@@ -8,7 +8,8 @@ export interface RatingResult {
     ratingCount?: number;
   };
   userRating?: UserRating;
-  setRating(rating: UserRating): void;
+  setRating: (rating: UserRating) => void;
+  resetRating: () => void;
 }
 
 export default function useRating(resource: Resource): RatingResult {
@@ -31,6 +32,21 @@ export default function useRating(resource: Resource): RatingResult {
         } else {
           const clonedResources = JSON.parse(JSON.stringify(resources)) as Resource[];
           clonedResources[idx].userRating = rating;
+          setResources(clonedResources);
+        }
+      }
+    },
+    resetRating: () => {
+      if (!resources) {
+        return;
+      } else {
+        const clonedResource = JSON.parse(JSON.stringify(resource)) as Resource;
+        const idx = resources.findIndex((r) => r['#IMDB_ID'] === resource['#IMDB_ID']);
+        if (idx < 0) {
+          setResources([...resources, { ...clonedResource, userRating: undefined }]);
+        } else {
+          const clonedResources = JSON.parse(JSON.stringify(resources)) as Resource[];
+          clonedResources[idx].userRating = undefined;
           setResources(clonedResources);
         }
       }
