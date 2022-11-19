@@ -6,13 +6,15 @@ import type { Resource, ResourcesResult } from '../../utils/api';
 import { useTranslation } from 'react-i18next';
 import { API_BASE_URL, fetcher } from '../../utils/api';
 import { fetchedResourcesState } from '../../state/ResourcesState';
+import { useDebounce } from 'usehooks-ts';
 
 export default function SearchBar() {
   const { mutate } = useSWRConfig();
   const { t } = useTranslation();
   const setFetchedResources = useSetRecoilState(fetchedResourcesState);
   const [keyboardInput, setKeyboardInput] = useState<string>('');
-  const url = useMemo(() => API_BASE_URL + '?q=' + keyboardInput, [keyboardInput]);
+  const debouncedKeyboardInput = useDebounce(keyboardInput, 500);
+  const url = useMemo(() => API_BASE_URL + '?q=' + debouncedKeyboardInput, [debouncedKeyboardInput]);
   const ref = useRef<HTMLInputElement>(null);
 
   const handleKeyUp = (e: KeyboardEvent<HTMLInputElement>) => {
