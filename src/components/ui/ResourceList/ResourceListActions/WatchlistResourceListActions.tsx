@@ -10,7 +10,6 @@ export interface WatchlistResourceListActionProps {
   resource: Resource;
 }
 
-// TODO: add functionality to buttons (open confirmation modal and set resource state)
 export default function WatchlistResourceListActions({ resource: r }: WatchlistResourceListActionProps) {
   const { t } = useTranslation();
   const { openModal, closeModal } = useModal();

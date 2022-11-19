@@ -3,7 +3,6 @@ import { availableLanguages } from '../../utils/language';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import ChevronDown from '../icons/ChevronDown';
-// import ChevronDown from '../icons/ChevronDown';
 
 export default function LanguageDropdown() {
   const { i18n } = useTranslation();

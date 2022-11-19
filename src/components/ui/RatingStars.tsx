@@ -10,7 +10,6 @@ export interface RatingStarsProps {
   orientation: 'horizontal' | 'vertical';
 }
 
-// TODO: add toolip to clear rating
 export default function RatingStars({ resource, orientation }: RatingStarsProps) {
   const { overallRating }: RatingResult = useRating(resource);
   const halfStarsAmount = 10;

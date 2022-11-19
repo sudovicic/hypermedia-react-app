@@ -4,9 +4,11 @@ import SearchBar from '../SearchBar';
 import ThemeToggle from '../ThemeToggle';
 import LanguageDropdown from '../LanguageDropdown';
 import NavBarBurgerMenu from './NavBarBurgerMenu';
+import { useTranslation } from 'react-i18next';
 
 export default function NavBar() {
   const location = useLocation();
+  const { t } = useTranslation();
 
   return (
     <div className="navbar">
@@ -15,7 +17,7 @@ export default function NavBar() {
       </div>
       <div className="flex-1">
         <Link to="/home" className="btn btn-ghost normal-case text-xl">
-          shelvr
+          {t('app_name')}
         </Link>
       </div>
       {location.pathname === '/home' && <SearchBar />}
