@@ -39,5 +39,8 @@
   "show_comments": "Kommentare anzeigen",
   "tab_commented": "Kommentiert",
   "tab_rated": "Bewertet",
-  "tab_watched": "Gesehen"
+  "tab_watched": "Gesehen",
+  "tag_new": "Neu",
+  "tag_trending": "Angesagt",
+  "tag_upcoming": "Bevorstehend"
 }

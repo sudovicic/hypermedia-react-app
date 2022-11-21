@@ -40,5 +40,8 @@
   "show_comments": "Show comments",
   "tab_commented": "Commented",
   "tab_rated": "Rated",
-  "tab_watched": "Watched"
+  "tab_watched": "Watched",
+  "tag_new": "New",
+  "tag_trending": "Trending",
+  "tag_upcoming": "Upcoming"
 }

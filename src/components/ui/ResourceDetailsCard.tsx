@@ -62,7 +62,7 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
           <div className="inline-flex mb-4">
             {tags.map((tag) => (
               <div key={`${id}-${tag.type}`} className="badge badge-secondary mr-1 select-none">
-                {tag.type.toUpperCase()}
+                {t(`tag_${tag.type}`).toUpperCase()}
               </div>
             ))}
           </div>
