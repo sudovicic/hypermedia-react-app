@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useId } from 'react';
 import type { Resource } from '../../utils/api';
 import RatingStars from './RatingStars';
@@ -12,6 +12,7 @@ import useWatchlist from '../../hooks/resources/useWatchlist/useWatchlist';
 import Check from '../icons/Check';
 import Plus from '../icons/Plus';
 import Comment from '../icons/Comment';
+import ModalResolver from './Modal/ModalResolver';
 
 interface ResourceDetailsCardProps {
   resource: Resource;
@@ -25,7 +26,6 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
   const { isSaved, toggleSaved } = useWatchlist(resource);
   const id = useId();
   const { t } = useTranslation();
-  const [showModal, setShowModal] = useState(false);
 
   const parse = (text: string) => {
     const doc = new DOMParser().parseFromString(text, 'text/html');
@@ -85,34 +85,44 @@ export default function ResourceDetailsCard({ resource }: ResourceDetailsCardPro
             {isSaved ? <Check className={iconClasses} /> : <Plus className={iconClasses} />}
             {t(isSaved ? 'added_to_list' : 'add_to_list_cta')}
           </button>
-          <button className="btn btn-wide ml-4" onClick={() => setShowModal(true)}>
+          {/* The button to open modal */}
+          <label htmlFor="my-modal-4" className="btn ml-4">
             <Comment className="fill-current w-6 h-6 mr-4" />
             {t('show_comments')}&nbsp;({comments.length})
-          </button>
-          {showModal ? (
-            <>
-              <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-                <div className="relative w-1/2 m-6 max-w-full">
-                  <div className="border-0 rounded-lg relative flex flex-col w-full bg-base-300 shadow-xl outline-none focus:outline-none">
-                    <div className="flex items-center justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                      <h3 className="text-3xl card-title uppercase">{t('comments')}</h3>
-                      <button className="btn" onClick={() => setShowModal(false)}>
-                        <svg className="w-6 h-6" viewBox="2286 2286 4572 4572">
-                          <path
-                            fill="currentColor"
-                            d="M3568 3692c-35,-34 -35,-90 0,-124 34,-35 90,-35 124,0l880 879 880 -879c34,-35 90,-35 124,0 35,34 35,90 0,124l-879 880 879 880c35,34 35,90 0,124 -34,35 -90,35 -124,0l-880 -879 -880 879c-34,35 -90,35 -124,0 -35,-34 -35,-90 0,-124l879 -880 -879 -880zm3033 880c0,-560 -227,-1067 -594,-1435 -368,-367 -875,-594 -1435,-594 -560,0 -1067,227 -1435,594 -367,368 -594,875 -594,1435 0,560 227,1067 594,1435 368,367 875,594 1435,594 560,0 1067,-227 1435,-594 367,-368 594,-875 594,-1435zm-470 -1559c399,399 646,950 646,1559 0,609 -247,1160 -646,1559 -399,399 -950,646 -1559,646 -609,0 -1160,-247 -1559,-646 -399,-399 -646,-950 -646,-1559 0,-609 247,-1160 646,-1559 399,-399 950,-646 1559,-646 609,0 1160,247 1559,646z"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                    <div className="relative p-6 flex-auto">
-                      <p>Test</p>
-                    </div>
-                  </div>
+          </label>
+
+          {/* Put this part before </body> tag */}
+          <input type="checkbox" id="my-modal-4" className="modal-toggle" />
+          <label htmlFor="my-modal-4" className="modal cursor-pointer">
+            <label className="modal-box relative" htmlFor="">
+              <div className="flex items-center justify-between p-3 border-b border-solid border-gray-300 rounded-t ">
+                <h3 className="text-3xl card-title uppercase">{t('comments')}</h3>
+                <label htmlFor="my-modal-4" className="btn btn-circle">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </label>
+              </div>
+              <div className="relative p-6 flex-auto">
+                <div className="w-fit block">
+                  <textarea className="textarea bg-base-300" placeholder="Add comment here..."></textarea>
+                  <button className="btn btn-md" type="submit">
+                    {t('submit')}
+                  </button>
+                </div>
+                <div className="w-fit">
+                  <p className="">Test</p>
                 </div>
               </div>
-            </>
-          ) : null}
+            </label>
+          </label>
+          <ModalResolver />
         </div>
       </div>
       <figure>
